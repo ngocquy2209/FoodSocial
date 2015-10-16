@@ -401,6 +401,8 @@
     <Content Include="ckeditor_basic\skins\kama\readme.md" />
     <Content Include="ckeditor_basic\skins\moono\readme.md" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Images\logo.jpg" />
+    <Content Include="Images\xoa.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -436,10 +438,10 @@
     <Content Include="Views\TrangNguoiDung\XemBaiDang.cshtml" />
     <Content Include="Views\TrangNguoiDung\_BinhLuan.cshtml" />
     <Content Include="Views\TrangNguoiDung\_ViewBinhLuan.cshtml" />
+    <Content Include="Views\TrangNguoiDung\_TatCaChiaSe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

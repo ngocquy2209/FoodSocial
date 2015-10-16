@@ -3,6 +3,15 @@
 @foreach (Comment CM in Model)
 {
     <div style="padding:5px;">
+@if (Session["id"] != null && CM.BaiChiaSe!=null)
+{
+    if (Session["id"].ToString() == CM.idNguoiViet || Session["id"].ToString()==CM.BaiChiaSe.idNguoiViet)
+    {
+        <div style="width:100%">
+            <img src="~/Images/xoa.png" width="10" style="float:right;" onclick="XoaComment(@CM.idComment,@CM.BaiChiaSe.idBaiDang)" />
+        </div>
+    }
+}
         <img width="50" height="50" style="float:left; margin-right:5px;" src="//graph.facebook.com/@CM.idNguoiViet/picture" />
         <div style="width:100%;padding:5px" align="left">
             <b style="color:#10c302;font-size:14px">@CM.tenNguoiViet</b> <br />
@@ -14,4 +23,14 @@
 }
 <script>
     document.getElementById("soBL_@ViewBag.idBaiViet").innerText = @Model.Count() + " Comment";
+    function XoaComment(idComment, idBaiViet) {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "/TrangNguoiDung/XoaComment?idComment=" + idComment+"&&idBaiViet="+idBaiViet,
+            success: function (data) {
+                $("#VungBinhLuan_" + idBaiViet).html(data.toString());
+            }
+        });
+    }
 </script>

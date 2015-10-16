@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Chia sẻ ăn uống";
+    ViewBag.Title = "Feeds";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 @using (Html.BeginForm("ChiaSe", "TrangNguoiDung", FormMethod.Post, new { name = "ChiaSe" }))
 {
 <div style="text-align:left">
     <div style="float:left;width:72%">
-        <span>Nhập nội dung bạn muốn chia sẻ</span><br />
+        <span>What was your feeling?</span><br />
         <textarea id="NoiDung" name="NoiDung"></textarea>
     </div>
     <div style="float:left;width:28%;">
         <div style="height:300px; border:solid 1px silver; margin:3px;margin-top:20px" id="AnhMinhHoa">
-            <span>Chọn ảnh minh họa</span>
+            <span>Picture</span>
         </div>
         <center>
             <input type="file" value="Chọn ảnh minh họa" id="UpAnh" accept="image/*" style="width:100%" />
@@ -19,11 +19,11 @@
         </center>
     </div>
     <div>
-        <span>Nhập địa điểm bạn muốn chia sẻ:</span>
+        <span>Location:</span>
         <input type="text" id="DiaDiem" name="DiaDiem" style="width:70%;height:35px;border: solid 1px silver; border-radius:3px;margin-top:10px;"/>
     </div>
 </div><br />
-<input type="button" value="Chia sẻ" onclick="KiemTra();"/>
+<input type="button" value="Share" onclick="KiemTra();"/>
 }
 <script src="~/ckeditor_basic/ckeditor.js"></script>
 <script language="JavaScript">

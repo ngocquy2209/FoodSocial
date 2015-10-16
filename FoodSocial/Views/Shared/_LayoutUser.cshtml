@@ -14,23 +14,13 @@
 }
     <div style="width:998px; background-color:white;min-height:600px;">
         <div style="width:998px; background-color:#52accc;position:fixed;z-index:10;display:block">
-            <div style="width:70%;float:left">
-                <ul class="nav nav-pills">
-                    @if (Session["tenDangNhap"] != null)
-                    {
-                        <li role="presentation" id="trangchu">
-                            <a href="/TrangNguoiDung/ChiaSeAnUong" style="color:white;">
-                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <span>Chia sẻ việc ăn uống</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
+            <div style="width:60%;float:left;text-align:left">
+                <img src="~/Images/logo.jpg" height="30" style="margin:5px;"/>
+                <input type="text" style="height:30px;width:400px;border-radius:3px;border:solid 1px black" placeholder="Search by Location/Content" id="Tim" onkeyup="TimKiem();"/>
             </div>
-
             @if (Session["tenDangNhap"] == null)
             {
-                <div style="width:100%;float:left">
+                <div style="width:40%;float:left">
                     <ul class="nav nav-pills" style="float:right">
                         <li role="presentation" id="dk">
                             <div class="fb-login-button" style="margin:5px;float:right" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
@@ -40,22 +30,19 @@
             }
             else
             {
-                <div style="width:30%;float:left">
+                <div style="width:40%;float:left;">
                     <ul class="nav nav-pills" style="float:right">
-                        <li role="presentation">
-                            <a href="#" style="color:white;">
-                                <span>Hello @Session["tenDangNhap"]</span>
+                        <li role="presentation" id="trangchu">
+                            <a href="/TrangNguoiDung/ChiaSeAnUong" style="color:white;">
+                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <span>Share your meal!</span>
                             </a>
                         </li>
                     </ul>
+                    </div>
+                    }
                 </div>
-            }
-
-        </div>
-
-
-
-        <div style="background-color:white;padding:10px;padding-top:50px;">
+        <div style="background-color:white;padding:10px;padding-top:50px;" id="Content">
             @RenderBody()
         </div>
     </div>
@@ -96,6 +83,16 @@
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
+  function TimKiem() {
+      $.ajax({
+          type: "GET",
+          contentType: "application/json; charset=utf-8",
+          url: "/TrangNguoiDung/TimKiem?tim=" + Tim.value,
+          success: function (data) {
+              $("#Content").html(data.toString());
+          }
+      });
+  }
     </script>
 @if (Session["tenDangNhap"] == null) {
     <script>

@@ -1,6 +1,4 @@
 ﻿@{
-    ViewBag.Title = "Food Social";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
     List<BaiChiaSe> CS = ViewBag.ChiaSe;
 }
 @using FoodSocial.Models
@@ -70,7 +68,7 @@
             contentType: "application/json; charset=utf-8",
             url: "/TrangNguoiDung/XoaBai?idBaiViet=" + idBaiViet,
             success: function (data) {
-                $("#BaiChiaSe_" + idBaiViet).remove();
+                $("#VungBinhLuan_" + idBaiViet).remove();
             }
         });
     }

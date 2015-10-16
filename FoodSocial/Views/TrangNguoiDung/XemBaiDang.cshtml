@@ -6,33 +6,42 @@
 <script>
     var baiDang = "";
 </script>
-<div style="width:98%; height:auto;box-shadow: 0px 2px 2px rgba(0,0,0,0.5);background-color:#ffffff; padding:5px">
-    <div style="width:100%">
-        <img width="50" height="50" style="float:left" src="//graph.facebook.com/@CS.idNguoiViet/picture" />
-        <div style="height:50px;width:100%;padding:5px" align="left">
-            <b style="color:#10c302;font-size:16px;margin-right:5px;">@CS.tenNguoiViet</b><b>at </b><span style="color:red">@CS.diaDiem</span><br />
-            <b style="font-size:12px;color:#808080">@CS.thoiGianViet.ToShortDateString()</b>
+<div style="width:98%; height:auto;box-shadow: 0px 2px 2px rgba(0,0,0,0.5);background-color:#ffffff; padding:5px;margin-top:10px;" id="BaiChiaSe_@CS.idBaiDang">
+    @if (Session["id"] != null)
+    {
+        if (Session["id"].ToString() == CS.idNguoiViet)
+        {
+            <div style="width:100%">
+                <img src="~/Images/xoa.png" width="10" style="float:right;" onclick="XoaBai(@CS.idBaiDang)"/>
+            </div>
+        }
+    }
+        <div style="width:100%">
+            <img width="50" height="50" style="float:left;margin-right:5px;" src="//graph.facebook.com/@CS.idNguoiViet/picture" />
+            <div style="width:100%;padding:5px;" align="left">
+                <b style="color:#10c302;font-size:16px;margin-right:5px;">@CS.tenNguoiViet</b><b>at </b><span style="color:red">@CS.diaDiem</span><br />
+                <b style="font-size:12px;color:#808080">@CS.thoiGianViet.ToShortDateString()</b>
+            </div>
+        </div>
+        <div id="ViewNoiDungChinh" align="left"><span style="width:98%;min-height:0px;height:0px;border:none;font-family:'Arial Unicode MS';font-size:15px" id="textarea_@CS.idBaiDang"> @Html.Raw(CS.noiDung) </span> </div>
+        <script>
+            $('#textarea_@CS.idBaiDang').height($('#textarea_@CS.idBaiDang')[0].scrollHeight - 4);
+        </script>
+        <div>
+            <center>
+                <img src="@CS.linkAnh" alt="@CS.linkAnh" width="300" />
+            </center>
+        </div>
+        <hr style="margin:2px;" />
+        <input type="button" value="Vote" onclick="Vote(@CS.idBaiDang);" />
+        <span style="color:blue" id="soVote_@CS.idBaiDang">@CS.vote Vote</span>
+        <input type="button" value="Comment" onclick="BinhLuan(@CS.idBaiDang);" />
+        <span style="color:blue" id="soBL_@CS.idBaiDang">@CS.CacComment.Where(x => x.idBaiDang == CS.idBaiDang).Count() Comment</span>
+        <hr style="margin:2px;" />
+        @{
+            List<Comment> CM = CS.CacComment.Where(x => x.idBaiDang == CS.idBaiDang).ToList();
+        }
+        <div id="VungBinhLuan_@CS.idBaiDang">
+            @Html.Partial("_ViewBinhLuan", CM)
         </div>
     </div>
-    <div id="ViewNoiDungChinh" align="left"><span style="width:98%;min-height:0px;height:0px;border:none;font-family:'Arial Unicode MS';font-size:15px" id="textarea_@CS.idBaiDang"> @Html.Raw(CS.noiDung) </span> </div>
-    <script>
-        $('#textarea_@CS.idBaiDang').height($('#textarea_@CS.idBaiDang')[0].scrollHeight - 4);
-    </script>
-    <div>
-        <center>
-            <img src="@CS.linkAnh" alt="@CS.linkAnh" width="300" />
-        </center>
-    </div>
-    <hr style="margin:2px;"/>
-    <input type="button" value="Vote" onclick="Vote(@CS.idBaiDang);"/>
-    <span style="color:blue" id="soVote_@CS.idBaiDang">@CS.vote Vote</span>
-    <input type="button" value="BinhLuan" onclick="BinhLuan(@CS.idBaiDang);" />
-    <span style="color:blue" id="soBL_@CS.idBaiDang">@CS.CacComment.Where(x=>x.idBaiDang==CS.idBaiDang).Count() Comment</span>
-    <hr style="margin:2px;" />
-    @{
-        List<Comment> CM = CS.CacComment.Where(x => x.idBaiDang == CS.idBaiDang).ToList();
-    }
-    <div id="VungBinhLuan_@CS.idBaiDang">
-            @Html.Partial("_ViewBinhLuan",CM)
-    </div>
-</div>

@@ -17,14 +17,16 @@ namespace FoodSocial.Controllers
         DataContext datacontext = new DataContext();
         public ActionResult TrangChu()
         {
-            ViewBag.ChiaSe = datacontext.BaiChiaSes.ToList();
+            ViewBag.ChiaSe = datacontext.BaiChiaSes.OrderByDescending(x=>x.thoiGianViet).ToList();
             return View();
         }
         public ActionResult DangNhap(FormCollection form)
         {
             Session["tenDangNhap"] = form["User"];
             Session["id"] = form["id"];
-            return RedirectToAction("TrangChu");
+            ViewBag.ChiaSe = datacontext.BaiChiaSes.OrderByDescending(x => x.thoiGianViet).ToList();
+            for (int i = 0; i < 1000000; i++) { }
+                return View("TrangChu");
         }
         public ActionResult ChiaSeAnUong()
         {
@@ -106,6 +108,31 @@ namespace FoodSocial.Controllers
                 datacontext.SaveChanges();
             }
             return LayNoiDungBL(idBV);
+        }
+        public ActionResult XoaComment(int idComment, int idBaiViet)
+        {
+            Comment CM = datacontext.Comments.SingleOrDefault(x => x.idComment == idComment);
+            if (CM != null)
+            {
+                datacontext.Comments.Remove(CM);
+                datacontext.SaveChanges();
+            }
+            return View("_ViewBinhLuan", datacontext.Comments.Where(x => x.idBaiDang == idBaiViet).ToList());
+        }
+        public ActionResult XoaBai(int idBaiViet)
+        {
+            BaiChiaSe CS = datacontext.BaiChiaSes.SingleOrDefault(x => x.idBaiDang == idBaiViet);
+            if (CS != null)
+            {
+                datacontext.BaiChiaSes.Remove(CS);
+                datacontext.SaveChanges();
+            }
+            return View("_ViewBinhLuan", datacontext.Comments.Where(x => x.idBaiDang == idBaiViet).ToList());
+        }
+        public ActionResult TimKiem(string tim)
+        {
+            ViewBag.ChiaSe = datacontext.BaiChiaSes.Where(y=>y.noiDung.Contains(tim)||y.diaDiem.Contains(tim)).OrderByDescending(x => x.thoiGianViet).ToList();
+            return View("_TatCaChiaSe");
         }
     }
 }
