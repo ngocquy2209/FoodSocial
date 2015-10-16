@@ -18,7 +18,6 @@ namespace FoodSocial.Models
         public int idAvatar { get; set; }
         public string noiDung { get; set; }
         public DateTime thoiGianViet { get; set; }
-        public int vote { set; get; }
         [ForeignKey("idBaiDang")]
         public virtual BaiChiaSe BaiChiaSe { set; get; }
     }

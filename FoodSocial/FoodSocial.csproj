@@ -137,6 +137,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510151418107_InitialCreate.cs" />
+    <Compile Include="Migrations\201510151418107_InitialCreate.Designer.cs">
+      <DependentUpon>201510151418107_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510160643403_M1.cs" />
+    <Compile Include="Migrations\201510160643403_M1.Designer.cs">
+      <DependentUpon>201510160643403_M1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaiChiaSe.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -445,6 +454,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510151418107_InitialCreate.resx">
+      <DependentUpon>201510151418107_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510160643403_M1.resx">
+      <DependentUpon>201510160643403_M1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
