@@ -65,6 +65,8 @@ namespace FoodSocial.Controllers
             CS.diaDiem = form["DiaDiem"];
             CS.linkAnh = form["linkAnh"];
             CS.vote = 0;
+            CS.latitude = form["Latitude"];
+            CS.longitude = form["Longitude"];
             datacontext.BaiChiaSes.Add(CS);
             datacontext.SaveChanges();
             return RedirectToAction("TrangChu");
@@ -100,7 +102,6 @@ namespace FoodSocial.Controllers
                 CM.tenNguoiViet = Session["tenDangNhap"].ToString();
                 CM.thoiGianViet = DateTime.Now;
                 CM.idBaiDang = idBV;
-                CM.vote = 0;
                 CM.idAvatar = 0;
                 datacontext.Comments.Add(CM);
                 datacontext.SaveChanges();

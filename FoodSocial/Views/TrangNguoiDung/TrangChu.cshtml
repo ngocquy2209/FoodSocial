@@ -18,61 +18,92 @@
         }
     </div>
 </div>
-<script>
-    $('#view').height($('#cot')[0].height);
-</script>
+<div id="light" class="white_content">
+    <div id="map" style="height:380px;width:480px;"></div>
+</div>
+<div id="fade" class="black_overlay" onclick="ClosePopup();"></div>
+<script type="text/javascript">
+    var lat;
+    var lng;
+    function ClosePopup() {
+        document.getElementById('light').style.display = 'none';
+        document.getElementById('fade').style.display = 'none';
+    }
+    function ViewMap(latit, longit) {
+        document.getElementById('light').style.display = 'block';
+        document.getElementById('fade').style.display = 'block';
+        lat = latit;
+        lng = longit;
+        initMap();
+    }
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: parseFloat(lat) , lng: parseFloat(lng) },
+            zoom: 8
+        });
+        var marker = new google.maps.Marker({
+            map: map,
+            position: { lat: parseFloat(lat), lng: parseFloat(lng) },
+            title: 'hear'
+        });
+    }
 
-<script>
-    function Vote(idBaiViet) {
-        $.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            url: "/TrangNguoiDung/Vote?idBaiViet=" + idBaiViet,
-            dataType: "json",
-            success: function (data) {
-                document.getElementById("soVote_" + idBaiViet).innerText = data.toString();
-            }
-        });
-    }
-    function BinhLuan(idBaiViet) {
-        if (baiDang != '') {
-            $.ajax({
-                type: "GET",
-                url: "/TrangNguoiDung/LayNoiDungBL?idBaiViet=" + baiDang,
-                success: function (data) {
-                    $("#VungBinhLuan_" + baiDang).html(data.toString());
-                    baiDang = '';
-                    $.ajax({
-                        type: "GET",
-                        url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
-                        success: function (data) {
-                            $("#VungBinhLuan_" + idBaiViet).append(data.toString());
-                            baiDang = idBaiViet;
-                        }
-                    });
-                }
-            });
-        }
-        else {
-            $.ajax({
-                type: "GET",
-                url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
-                success: function (data) {
-                    $("#VungBinhLuan_" + idBaiViet).append(data.toString());
-                    baiDang = idBaiViet;
-                }
-            });
-        }
-    }
-    function XoaBai(idBaiViet) {
-        $.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            url: "/TrangNguoiDung/XoaBai?idBaiViet=" + idBaiViet,
-            success: function (data) {
-                $("#BaiChiaSe_" + idBaiViet).remove();
-            }
-        });
-    }
 </script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUcqGiGHUOvcQ7PpV6wVsl6Yay0rmyxNs&callback=initMap">
+</script>
+    <script>
+        function Vote(idBaiViet) {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/TrangNguoiDung/Vote?idBaiViet=" + idBaiViet,
+                dataType: "json",
+                success: function (data) {
+                    document.getElementById("soVote_" + idBaiViet).innerText = data.toString();
+                }
+            });
+        }
+        function BinhLuan(idBaiViet) {
+            if (baiDang != '') {
+                $.ajax({
+                    type: "GET",
+                    url: "/TrangNguoiDung/LayNoiDungBL?idBaiViet=" + baiDang,
+                    success: function (data) {
+                        $("#VungBinhLuan_" + baiDang).html(data.toString());
+                        baiDang = '';
+                        $.ajax({
+                            type: "GET",
+                            url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
+                            success: function (data) {
+                                $("#VungBinhLuan_" + idBaiViet).append(data.toString());
+                                baiDang = idBaiViet;
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
+                    success: function (data) {
+                        $("#VungBinhLuan_" + idBaiViet).append(data.toString());
+                        baiDang = idBaiViet;
+                    }
+                });
+            }
+        }
+        function XoaBai(idBaiViet) {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/TrangNguoiDung/XoaBai?idBaiViet=" + idBaiViet,
+                success: function (data) {
+                    $("#BaiChiaSe_" + idBaiViet).remove();
+                }
+            });
+        }
+    </script>
 

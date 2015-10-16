@@ -19,6 +19,8 @@ namespace FoodSocial.Models
         public int vote { set; get; }
         public string linkAnh { set; get; }
         public string diaDiem { set; get; }
+        public string longitude { set; get; }
+        public string latitude { set; get; }
         public virtual ICollection<Comment> CacComment { set; get; }
     }
 }
