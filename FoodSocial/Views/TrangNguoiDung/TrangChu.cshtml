@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Food Social";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    List<BaiChiaSe> CS = ViewBag.ChiaSe;
+}
+@using FoodSocial.Models
+<div style="text-align:left;height:10000px;" id="view">
+    <div style="width:48%; padding:10px;float:left" id="cot">
+        @for (int i = 0; i < CS.Count; i += 2)
+        {
+            @Html.Partial("XemBaiDang", CS[i]);
+        }
+    </div>
+    <div style="width:48%; padding:10px;float:left">
+        @for (int i = 1; i < CS.Count; i += 2)
+        {
+            @Html.Partial("XemBaiDang", CS[i]);
+        }
+    </div>
+</div>
+<script>
+    $('#view').height($('#cot')[0].height);
+</script>
+
+<script>
+    function Vote(idBaiViet) {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "/TrangNguoiDung/Vote?idBaiViet=" + idBaiViet,
+            dataType: "json",
+            success: function (data) {
+                document.getElementById("soVote_" + idBaiViet).innerText = data.toString();
+            }
+        });
+    }
+    function BinhLuan(idBaiViet) {
+        if (baiDang != '') {
+            $.ajax({
+                type: "GET",
+                url: "/TrangNguoiDung/LayNoiDungBL?idBaiViet=" + baiDang,
+                success: function (data) {
+                    $("#VungBinhLuan_" + baiDang).html(data.toString());
+                    baiDang = '';
+                    $.ajax({
+                        type: "GET",
+                        url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
+                        success: function (data) {
+                            $("#VungBinhLuan_" + idBaiViet).append(data.toString());
+                            baiDang = idBaiViet;
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                url: "/TrangNguoiDung/BinhLuan?idBaiViet=" + idBaiViet,
+                success: function (data) {
+                    $("#VungBinhLuan_" + idBaiViet).append(data.toString());
+                    baiDang = idBaiViet;
+                }
+            });
+        }
+    }
+</script>
+

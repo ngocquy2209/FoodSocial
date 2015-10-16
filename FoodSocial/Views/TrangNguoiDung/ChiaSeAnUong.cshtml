@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Chia sẻ ăn uống";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@using (Html.BeginForm("ChiaSe", "TrangNguoiDung", FormMethod.Post, new { name = "ChiaSe" }))
+{
+<div style="text-align:left">
+    <div style="float:left;width:72%">
+        <span>Nhập nội dung bạn muốn chia sẻ</span><br />
+        <textarea id="NoiDung" name="NoiDung"></textarea>
+    </div>
+    <div style="float:left;width:28%;">
+        <div style="height:300px; border:solid 1px silver; margin:3px;margin-top:20px" id="AnhMinhHoa">
+            <span>Chọn ảnh minh họa</span>
+        </div>
+        <center>
+            <input type="file" value="Chọn ảnh minh họa" id="UpAnh" accept="image/*" style="width:100%" />
+            <input type="hidden" name="linkAnh" id="linkAnh" value="" />
+        </center>
+    </div>
+    <div>
+        <span>Nhập địa điểm bạn muốn chia sẻ:</span>
+        <input type="text" id="DiaDiem" name="DiaDiem" style="width:70%;height:35px;border: solid 1px silver; border-radius:3px;margin-top:10px;"/>
+    </div>
+</div><br />
+<input type="button" value="Chia sẻ" onclick="KiemTra();"/>
+}
+<script src="~/ckeditor_basic/ckeditor.js"></script>
+<script language="JavaScript">
+    CKEDITOR.replace('NoiDung', {
+        uiColor: '#14B8C4'
+    });
+    CKEDITOR.config.height = '250px';
+    CKEDITOR.config.width = '700px';
+    $('#UpAnh').on('change', function (e) {
+        var files = e.target.files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/TrangNguoiDung/AnhMinhHoa?linkCu=' + linkAnh.value,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        linkAnh.value = result;
+                        $("#AnhMinhHoa > span").remove();
+                        $("#AnhMinhHoa").append('<img src="' + result + '" alt="' + result + '" height="298" style="width:99%"/>');
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        alert(err);
+                    }
+                });
+            } else {
+                alert("This browser doesn't support HTML5 file uploads!");
+            }
+        }
+    });
+    function KiemTra() {
+        noidung = CKEDITOR.instances["NoiDung"].getData();
+        if (DiaDiem.value == "") {
+            alert("Bạn phải nhập địa điểm bạn muốn chia sẻ");
+            return;
+        }
+        if (noidung.length < 1) {
+            alert("Bạn phải nhập nội dung muốn chia sẻ");
+            return;
+        }
+        document.ChiaSe.submit();
+    }
+    </script>

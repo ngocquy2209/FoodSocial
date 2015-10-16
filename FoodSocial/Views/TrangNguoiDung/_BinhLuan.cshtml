@@ -1,0 +1,22 @@
+﻿@using (Ajax.BeginForm("", "TrangNguoiDung", new AjaxOptions { HttpMethod = "POST" }, new { name = "bl", id = "BL" }))
+{
+    <textarea id="binhLuan" name="binhLuan"></textarea>
+    <input type="hidden" name="idBaiViet" id="idBaiViet" value="@ViewBag.idBaiViet"/>
+    <input type="button" value="Bình luận" onclick="LuuBinhLuan();"/>
+    <input type="hidden" name="BinhLuan" id="BinhLuanChoBaiViet" />
+}
+<script src="~/ckeditor_basic/ckeditor.js"></script>
+<script language="JavaScript">
+    CKEDITOR.replace('binhLuan', {
+        uiColor: '#14B8C4'
+    });
+    CKEDITOR.config.height = '50px';
+    CKEDITOR.config.width = '400px';
+    function LuuBinhLuan() {
+        $("#BinhLuanChoBaiViet").attr('value', CKEDITOR.instances["binhLuan"].getData());
+        var form = $("#BL").serialize();
+        $.post("/TrangNguoiDung/LuuBinhLuan", form, function (data) {
+            $("#VungBinhLuan_" + '@ViewBag.idBaiViet').html(data.toString());
+        });
+    }
+</script>

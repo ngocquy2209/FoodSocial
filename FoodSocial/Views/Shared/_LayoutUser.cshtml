@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        background-color: silver;
+    }
+</style>
+    <center>
+@using (Html.BeginForm("DangNhap", "TrangNguoiDung", FormMethod.Post, new { name = "DN" }))
+{        
+    <input type="hidden" name="User" id="User"/>
+    <input type="hidden" name="id" id="id" />
+}
+    <div style="width:998px; background-color:white;min-height:600px;">
+        <div style="width:998px; background-color:#52accc;position:fixed;z-index:10;display:block">
+            <div style="width:70%;float:left">
+                <ul class="nav nav-pills">
+                    @if (Session["tenDangNhap"] != null)
+                    {
+                        <li role="presentation" id="trangchu">
+                            <a href="/TrangNguoiDung/ChiaSeAnUong" style="color:white;">
+                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <span>Chia sẻ việc ăn uống</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            @if (Session["tenDangNhap"] == null)
+            {
+                <div style="width:100%;float:left">
+                    <ul class="nav nav-pills" style="float:right">
+                        <li role="presentation" id="dk">
+                            <div class="fb-login-button" style="margin:5px;float:right" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div style="width:30%;float:left">
+                    <ul class="nav nav-pills" style="float:right">
+                        <li role="presentation">
+                            <a href="#" style="color:white;">
+                                <span>Hello @Session["tenDangNhap"]</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+
+        </div>
+
+
+
+        <div style="background-color:white;padding:10px;padding-top:50px;">
+            @RenderBody()
+        </div>
+    </div>
+</center>
+<script>
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+  window.fbAsyncInit = function() {
+  FB.init({
+      appId: '959813734060624',
+    xfbml      : true,
+    version    : 'v2.5'
+  });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+    </script>
+@if (Session["tenDangNhap"] == null) {
+    <script>
+        function testAPI() {
+            FB.api('/me', function (response) {
+                document.getElementById("User").value = response.name;
+                document.getElementById("id").value = response.id;
+                document.DN.submit();
+            });
+        }
+    </script>
+}
+
