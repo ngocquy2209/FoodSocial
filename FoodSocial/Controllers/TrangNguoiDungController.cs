@@ -24,9 +24,7 @@ namespace FoodSocial.Controllers
         {
             Session["tenDangNhap"] = form["User"];
             Session["id"] = form["id"];
-            ViewBag.ChiaSe = datacontext.BaiChiaSes.OrderByDescending(x => x.thoiGianViet).ToList();
-            for (int i = 0; i < 1000000; i++) { }
-                return View("TrangChu");
+            return RedirectToAction("TrangChu");
         }
         public ActionResult ChiaSeAnUong()
         {
@@ -117,7 +115,7 @@ namespace FoodSocial.Controllers
                 datacontext.Comments.Remove(CM);
                 datacontext.SaveChanges();
             }
-            return View("_ViewBinhLuan", datacontext.Comments.Where(x => x.idBaiDang == idBaiViet).ToList());
+            return LayNoiDungBL(idBaiViet);
         }
         public ActionResult XoaBai(int idBaiViet)
         {
