@@ -18,6 +18,7 @@ namespace FoodSocial.Controllers
         public ActionResult TrangChu()
         {
             ViewBag.ChiaSe = datacontext.BaiChiaSes.OrderByDescending(x=>x.thoiGianViet).ToList();
+            
             return View();
         }
         public ActionResult DangNhap(FormCollection form)
