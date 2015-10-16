@@ -7195,9 +7195,9 @@ button.close {
 .white_content {
     display: none;
     position: fixed;
-    top: 17%;
-    left: 33%;
-    width: 500px;
+    top: 50px;
+    left: 300px;
+    width: 700px;
     height: 400px;
     padding-left:10px;
     padding-right:10px;
